@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume.AI — Intelligent Resume Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">Resume<span>.AI</span></div>
+  <div class="header-tag">Intelligent Resume Builder</div>
+</header>
+
+<div class="app">
+  <!-- LEFT PANEL -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">Build Your Resume</div>
+      <div class="panel-subtitle">Fill in your details — AI will enhance the content</div>
+      <div class="steps-nav">
+        <button class="step-btn active" onclick="switchStep(0)">Basics</button>
+        <button class="step-btn" onclick="switchStep(1)">Experience</button>
+        <button class="step-btn" onclick="switchStep(2)">Education</button>
+        <button class="step-btn" onclick="switchStep(3)">Skills</button>
+      </div>
+    </div>
+
+    <!-- STEP 0: Basics -->
+    <div class="form-section active" id="step-0">
+      <div class="field-group">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Jane Smith" oninput="updatePreview()">
+      </div>
+      <div class="field-group">
+        <label>Professional Title</label>
+        <input type="text" id="title" placeholder="Senior Software Engineer" oninput="updatePreview()">
+      </div>
+      <div class="two-col">
+        <div class="field-group">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="jane@email.com" oninput="updatePreview()">
+        </div>
+        <div class="field-group">
+          <label>Phone</label>
+          <input type="tel" id="phone" placeholder="+1 555 000 0000" oninput="updatePreview()">
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="field-group">
+          <label>Location</label>
+          <input type="text" id="location" placeholder="San Francisco, CA" oninput="updatePreview()">
+        </div>
+        <div class="field-group">
+          <label>LinkedIn / Portfolio</label>
+          <input type="text" id="website" placeholder="linkedin.com/in/jane" oninput="updatePreview()">
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Professional Summary</label>
+        <textarea id="summary" rows="4" placeholder="Brief overview of your experience and goals..." oninput="updatePreview()"></textarea>
+      </div>
+    </div>
+
+    <!-- STEP 1: Experience -->
+    <div class="form-section" id="step-1">
+      <div id="exp-list"></div>
+      <button class="btn btn-ghost add-entry-btn" onclick="openModal('exp')">
+        + Add Experience
+      </button>
+    </div>
+
+    <!-- STEP 2: Education -->
+    <div class="form-section" id="step-2">
+      <div id="edu-list"></div>
+      <button class="btn btn-ghost add-entry-btn" onclick="openModal('edu')">
+        + Add Education
+      </button>
+    </div>
+
+    <!-- STEP 3: Skills -->
+    <div class="form-section" id="step-3">
+      <div class="field-group">
+        <label>Skills (comma-separated)</label>
+        <textarea id="skills" rows="3" placeholder="Python, React, Node.js, AWS, Docker, PostgreSQL..." oninput="updatePreview()"></textarea>
+      </div>
+      <div class="field-group">
+        <label>Certifications</label>
+        <textarea id="certs" rows="2" placeholder="AWS Certified, Google Cloud Professional..." oninput="updatePreview()"></textarea>
+      </div>
+      <div class="field-group">
+        <label>Languages</label>
+        <input type="text" id="languages" placeholder="English (Native), Spanish (Fluent)" oninput="updatePreview()">
+      </div>
+    </div>
+
+    <!-- AI SECTION (always visible) -->
+    <div class="ai-section">
+      <div class="ai-header">
+        <div class="ai-dot"></div>
+        <span class="ai-label">AI Enhancement</span>
+      </div>
+      <div class="ai-body">
+        <textarea class="ai-prompt" id="ai-prompt" rows="2" placeholder="e.g. Make my summary more impactful for a senior role at a startup...">Enhance my resume to be concise, impactful, and ATS-optimized. Use strong action verbs and quantify achievements where possible.</textarea>
+        <button class="btn btn-ai" id="ai-btn" onclick="generateWithAI()">
+          <span id="ai-btn-icon">✦</span>
+          <span id="ai-btn-text">Generate with AI</span>
+        </button>
+      </div>
+    </div>
+
+    <div style="padding: 16px 32px 32px; display: flex; gap: 10px;">
+      <button class="btn btn-primary" onclick="downloadResume()" style="flex:1; justify-content:center;">
+        ↓ Export PDF
+      </button>
+      <button class="btn btn-ghost" onclick="clearAll()">Clear</button>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL — PREVIEW -->
+  <div class="preview-panel">
+    <div class="preview-toolbar">
+      <span class="preview-label">Live Preview</span>
+    </div>
+    <div class="resume-sheet" id="resume-output">
+      <div class="empty-state">
+        <div class="empty-icon">◎</div>
+        <div class="empty-title">Your resume will appear here</div>
+        <div class="empty-sub">Start filling in your details on the left</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal" id="modal-content">
+    <!-- dynamic content -->
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+</body>
+</html>
